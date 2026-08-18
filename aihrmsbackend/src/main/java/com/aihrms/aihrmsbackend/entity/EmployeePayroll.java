@@ -19,7 +19,7 @@ public class EmployeePayroll {
 
     @Column(name = "net_salary")
     private BigDecimal netSalary;
-    @Column(length = 20)
+    @Column(name = "month",length = 20)
     private String month;
     private Integer year;
 
