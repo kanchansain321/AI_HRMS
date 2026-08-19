@@ -9,9 +9,10 @@ import java.math.BigDecimal;
 public class EmployeePayroll {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @Column(name = "employee_id")
-    private  Integer Employee_id;
+    private Long id;
+    @JoinColumn(name = "employee_id")
+    @ManyToOne
+    private  Employee employee;
     @Column(name = "basic_salary")
     private BigDecimal basicSalary;
     @Column(precision = 10,scale = 2)
@@ -23,20 +24,21 @@ public class EmployeePayroll {
     private String month;
     private Integer year;
 
-    public Integer getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getEmployee_id() {
-        return Employee_id;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployee_id(Integer employee_id) {
-        Employee_id = employee_id;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public BigDecimal getBasicSalary() {

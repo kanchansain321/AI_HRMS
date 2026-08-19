@@ -11,7 +11,7 @@ public class EmployeeAttendence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @JoinColumn(name="employee_id")
     @ManyToOne
@@ -30,11 +30,11 @@ public class EmployeeAttendence {
     private String status;
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

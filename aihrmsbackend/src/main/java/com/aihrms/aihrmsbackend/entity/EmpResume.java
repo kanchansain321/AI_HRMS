@@ -9,28 +9,33 @@ import java.util.Date;
 public class EmpResume {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    private Integer id;
+    @Column(name = "candidate_name")
     private String candidateName;
+
+    @Column(name = "email", length = 100)
     private String email;
+    @Column(name = "filePath", length = 200)
     private String filePath;
+    @Column(name = "upload_at", updatable = false)
     private Date uploadedAt;
 
-   public EmpResume()
-   {
+    public EmpResume() {
 
-   }
-   @PrePersist
-    protected  void onCreate()
-   {
-       this.uploadedAt=new Date();
-   }
+    }
 
-    public Integer getId() {
+    @PrePersist
+    protected void onCreate() {
+
+        this.uploadedAt = new Date();
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
