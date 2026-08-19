@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface EmployeeAttendenceRepo extends JpaRepository<EmployeeAttendence,Long> {
-    List<EmployeeAttendence> findByEmployeeId(Long employeeid);
-    List<EmployeeAttendence> findEmployeeIdAndDateBetween(Long employeeId, Date start,Date end);
+
 
 }

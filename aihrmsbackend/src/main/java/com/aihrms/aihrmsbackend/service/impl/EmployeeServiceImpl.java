@@ -9,6 +9,18 @@ import org.springframework.stereotype.Service;
 public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeResponse createEmployee(EmployeeAddUpdateReq request) {
+    try{
+        if(request!=null){
+            
+
+        }else{
+            return null;
+        }
+
+
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
         return null;
     }
 }

@@ -7,9 +7,9 @@ public class EmployeeAddUpdateReq {
     private String name;
     private String email;
     private String password;
-    private String role;
+    private Integer role;
     private Integer department;
-    private String designation;
+    private Integer designation;
     private Date joiningDate;
 
     private String phoneNumber;
@@ -47,11 +47,11 @@ public class EmployeeAddUpdateReq {
         this.password = password;
     }
 
-    public String getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
@@ -63,11 +63,11 @@ public class EmployeeAddUpdateReq {
         this.department = department;
     }
 
-    public String getDesignation() {
+    public Integer getDesignation() {
         return designation;
     }
 
-    public void setDesignation(String designation) {
+    public void setDesignation(Integer designation) {
         this.designation = designation;
     }
 
