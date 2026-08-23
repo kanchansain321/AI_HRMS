@@ -5,4 +5,6 @@ import com.aihrms.aihrmsbackend.dto.response.EmployeeResponse;
 
 public interface EmployeeService {
     EmployeeResponse createEmployee(EmployeeAddUpdateReq request);
+
+    EmployeeResponse findByIdEmployee(Long id);
 }

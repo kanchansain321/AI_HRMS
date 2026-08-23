@@ -18,14 +18,17 @@ public class Employee {
     @Column(name="password")
     private String password;
 
-    @Column(name="role")
-    private String role;
+    @JoinColumn(name="role")
+    @OneToOne
+    private EmpRole  role;
 
-    @Column(name = "department_id")
-    private Integer department;
+    @JoinColumn(name = "department_id")
+    @OneToOne
+    private Department department;
 
-    @Column(name="designation_id")
-    private Integer designation;
+    @JoinColumn(name="designation_id",referencedColumnName = "id")
+    @OneToOne
+    private Designation designation;
 
     @Column(name="joining_date")
     private Date joiningDate;
@@ -73,29 +76,32 @@ public class Employee {
   this.password = password;
  }
 
- public String getRole() {
+ public EmpRole getRole() {
   return role;
  }
 
- public void setRole(String role) {
+ public void setRole(EmpRole role) {
   this.role = role;
  }
 
- public Integer getDepartment() {
+ public Department getDepartment() {
   return department;
  }
 
- public void setDepartment(Integer department) {
+ public void setDepartment(Department department) {
   this.department = department;
  }
 
- public Integer getDesignation() {
-  return designation;
- }
-
- public void setDesignation(Integer designation) {
+ public void setDesignation(Designation designation) {
   this.designation = designation;
  }
+
+ public Designation getDesignation() {
+  return designation;
+
+ }
+
+
 
  public Date getJoiningDate() {
   return joiningDate;

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "leave")
+@Table(name = "emp_leave")
 public class EmployeeLeave {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
