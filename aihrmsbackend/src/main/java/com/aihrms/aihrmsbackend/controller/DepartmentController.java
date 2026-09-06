@@ -3,10 +3,7 @@ package com.aihrms.aihrmsbackend.controller;
 import com.aihrms.aihrmsbackend.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/department")
@@ -20,6 +17,22 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.addDepartment(departmentName));
     }
 
+    // Get Department By ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getDepartmentById(@PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                departmentService.getDepartmentById(id)
+        );
+    }
+    // Get All Departments
+    @GetMapping
+    public ResponseEntity<?> getAllDepartments() {
+
+        return ResponseEntity.ok(
+                departmentService.getAllDepartments()
+        );
+    }
 
 
 

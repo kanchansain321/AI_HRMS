@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentServiceImp implements DepartmentService {
@@ -18,21 +20,114 @@ public class DepartmentServiceImp implements DepartmentService {
 
     @Override
     public CustomResponse addDepartment(String name){
+
         try {
-            Department department=new Department();
+
+            // Duplicate name check
+            Optional<Department> existingDepartment =
+                    departmentRepo.findByDepartmentName(name);
+
+            if (existingDepartment.isPresent()) {
+
+                return new CustomResponse(
+                        HttpStatus.CONFLICT.value(),
+                        null,
+                        "Department Already Exists"
+                );
+            }
+
+
+            Department department = new Department();
+
             department.setDepartmentName(name);
             department.setCreatedOn(new Date());
             department.setIsActive(true);
 
             departmentRepo.save(department);
 
-            return new CustomResponse(HttpStatus.OK.value(),null,"Department Saved Successfully");
-        }
-        catch (Exception e) {
+            return new CustomResponse(
+                    HttpStatus.OK.value(),
+                    department,
+                    "Department Saved Successfully"
+            );
+
+        } catch (Exception e) {
+
             e.printStackTrace();
 
-            return new CustomResponse(HttpStatus.BAD_REQUEST.value(),null,"Something Went Wrong");
+            return new CustomResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    null,
+                    "Something Went Wrong"
+            );
         }
+    }
+
+
+    // Get Department By ID
+    @Override
+    public CustomResponse getDepartmentById(Long id) {
+
+        try {
+
+            Optional<Department> department =
+                    departmentRepo.findById(id);
+            //Department department = departmentRepo.getById(id);
+
+            if (department.isEmpty()) {
+
+                return new CustomResponse(
+                        HttpStatus.NOT_FOUND.value(),
+                        null,
+                        "Department Not Found"
+                );
+            }
+
+            return new CustomResponse(
+                    HttpStatus.OK.value(),
+                    department.get(),
+                    "Department Found Successfully"
+            );
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new CustomResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    null,
+                    "Something Went Wrong"
+            );
+        }
+    }
+
+
+    // Get All Departments
+    @Override
+    public CustomResponse getAllDepartments() {
+
+        try {
+
+            List<Department> departments =
+                    departmentRepo.findAll();
+
+            return new CustomResponse(
+                    HttpStatus.OK.value(),
+                    departments,
+                    "Departments Found Successfully"
+            );
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new CustomResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    null,
+                    "Something Went Wrong"
+            );
+        }
+
 
     }
 
