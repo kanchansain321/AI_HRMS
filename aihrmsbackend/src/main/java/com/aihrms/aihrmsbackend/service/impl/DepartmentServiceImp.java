@@ -1,6 +1,7 @@
 package com.aihrms.aihrmsbackend.service.impl;
 
 import com.aihrms.aihrmsbackend.dto.response.CustomResponse;
+import com.aihrms.aihrmsbackend.dto.response.DepartmentResponse;
 import com.aihrms.aihrmsbackend.entity.Department;
 import com.aihrms.aihrmsbackend.repository.DepartmentRepo;
 import com.aihrms.aihrmsbackend.service.DepartmentService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +46,9 @@ public class DepartmentServiceImp implements DepartmentService {
             department.setIsActive(true);
 
             departmentRepo.save(department);
+            // Entity -> Response
+            DepartmentResponse response = mapToResponse(department);
+
 
             return new CustomResponse(
                     HttpStatus.OK.value(),
@@ -83,6 +88,10 @@ public class DepartmentServiceImp implements DepartmentService {
                 );
             }
 
+            // Entity -> Response
+            DepartmentResponse response =
+                    mapToResponse(department.get());
+
             return new CustomResponse(
                     HttpStatus.OK.value(),
                     department.get(),
@@ -111,6 +120,18 @@ public class DepartmentServiceImp implements DepartmentService {
             List<Department> departments =
                     departmentRepo.findAll();
 
+            List<DepartmentResponse> responseList =
+                    new ArrayList<>();
+
+
+            for (Department department : departments) {
+
+                DepartmentResponse response =
+                        mapToResponse(department);
+
+                responseList.add(response);
+            }
+
             return new CustomResponse(
                     HttpStatus.OK.value(),
                     departments,
@@ -129,6 +150,23 @@ public class DepartmentServiceImp implements DepartmentService {
         }
 
 
+    }
+
+    // Entity -> Response
+    private DepartmentResponse mapToResponse(Department department) {
+
+        DepartmentResponse response =
+                new DepartmentResponse();
+
+        response.setId(department.getId());
+        response.setDepartmentName(
+                department.getDepartmentName()
+        );
+        response.setActive(
+                department.getIsActive()
+        );
+
+        return response;
     }
 
 
