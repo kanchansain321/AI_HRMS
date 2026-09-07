@@ -52,7 +52,7 @@ public class DepartmentServiceImp implements DepartmentService {
 
             return new CustomResponse(
                     HttpStatus.OK.value(),
-                    department,
+                    response,
                     "Department Saved Successfully"
             );
 
