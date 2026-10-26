@@ -155,7 +155,70 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    // ─── UPDATE EMPLOYEE ────────────────────────────────────────
+    @Override
+    public EmployeeResponse updateEmployee(EmployeeAddUpdateReq request) {
+        try {
+            // 1. Find the existing employee (throws error if not found)
+            Employee employee = employeeRepo.findById(Long.valueOf(request.getId()))
+                    .orElseThrow(() -> new RuntimeException("Employee not found with id: " + request.getId()));
 
+            // 2. Update basic fields (only if provided in request)
+            if (request.getName() != null) {
+                employee.setName(request.getName());
+            }
+            if (request.getEmail() != null) {
+                // Check if new email is already taken by ANOTHER employee
+                List<Employee> emailCheck = employeeRepo.existsByEmail(request.getEmail());
+                if (!emailCheck.isEmpty() && !emailCheck.get(0).getId().equals(request.getId())) {
+                    throw new RuntimeException("Email already registered: " + request.getEmail());
+                }
+                employee.setEmail(request.getEmail());
+            }
+            if (request.getPhoneNumber() != null) {
+                employee.setPhoneNumber(request.getPhoneNumber());
+            }
+            if (request.getJoiningDate() != null) {
+                employee.setJoiningDate(request.getJoiningDate());
+            }
+
+            // 3. Update Department (if department ID is provided)
+            if (request.getDepartment() != null) {
+                Department department = departmentRepo.findById(Long.valueOf(request.getDepartment()))
+                        .orElseThrow(() -> new RuntimeException(
+                                "Department not found with id: " + request.getDepartment()));
+                employee.setDepartment(department);
+            }
+
+            // 4. Update Designation (if designation ID is provided)
+            if (request.getDesignation() != null) {
+                Designation designation = designationRepo.findById(Long.valueOf(request.getDesignation()))
+                        .orElseThrow(() -> new RuntimeException(
+                                "Designation not found with id: " + request.getDesignation()));
+                employee.setDesignation(designation);
+            }
+
+            // 5. Update Role (if role ID is provided)
+            if (request.getRole() != null) {
+                EmpRole empRole = empRoleRepo.findById(request.getRole().longValue())
+                        .orElseThrow(() -> new RuntimeException(
+                                "Role not found with id: " + request.getRole()));
+                employee.setRole(empRole);
+            }
+
+            // 6. Set the updated timestamp
+            employee.setUpdatedAt(new java.util.Date());
+
+            // 7. Save updated employee to database
+            Employee savedEmployee = employeeRepo.save(employee);
+
+            // 8. Convert entity to response DTO and return
+            return mapToResponse(savedEmployee);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 

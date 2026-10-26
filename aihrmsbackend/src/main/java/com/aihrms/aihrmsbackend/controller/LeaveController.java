@@ -1,0 +1,4 @@
+package com.aihrms.aihrmsbackend.controller;
+
+public class LeaveController {
+}

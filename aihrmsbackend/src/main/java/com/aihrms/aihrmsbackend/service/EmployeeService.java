@@ -12,4 +12,8 @@ public interface EmployeeService {
 
     //GetAll
     List<EmployeeResponse> findAll();
+
+
+    // ─── UPDATE EMPLOYEE ────────────────────────────────────────
+    EmployeeResponse updateEmployee(EmployeeAddUpdateReq request);
 }
