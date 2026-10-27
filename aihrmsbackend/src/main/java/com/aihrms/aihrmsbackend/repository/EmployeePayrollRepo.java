@@ -4,6 +4,14 @@ import com.aihrms.aihrmsbackend.entity.EmployeePayroll;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface EmployeePayrollRepo extends JpaRepository<EmployeePayroll,Long> {
+public interface EmployeePayrollRepo
+        extends JpaRepository<EmployeePayroll, Long> {
+
+    List<EmployeePayroll> findByEmployee_Id(Long employeeId);
+
+    List<EmployeePayroll> findByMonthAndYear(
+            String month, Integer year);
 }
