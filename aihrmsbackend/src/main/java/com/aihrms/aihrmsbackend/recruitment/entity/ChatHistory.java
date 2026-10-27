@@ -1,5 +1,6 @@
-package com.aihrms.aihrmsbackend.entity;
+package com.aihrms.aihrmsbackend.recruitment.entity;
 
+import com.aihrms.aihrmsbackend.entity.Employee;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -13,7 +14,7 @@ public class ChatHistory {
 
     @JoinColumn(name = "employee_id")
     @ManyToOne
-    private  Employee  employee;
+    private Employee employee;
     @Column(name = "message",columnDefinition = "TEXT")
     private String message;
     @Column(name = "response",columnDefinition = "TEXT")

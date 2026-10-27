@@ -1,6 +1,6 @@
-package com.aihrms.aihrmsbackend.repository;
+package com.aihrms.aihrmsbackend.recruitment.repository;
 
-import com.aihrms.aihrmsbackend.entity.InterviewQuestion;
+import com.aihrms.aihrmsbackend.recruitment.entity.InterviewQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
-package com.aihrms.aihrmsbackend.repository;
+package com.aihrms.aihrmsbackend.recruitment.repository;
 
-import com.aihrms.aihrmsbackend.entity.ChatHistory;
+import com.aihrms.aihrmsbackend.recruitment.entity.ChatHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

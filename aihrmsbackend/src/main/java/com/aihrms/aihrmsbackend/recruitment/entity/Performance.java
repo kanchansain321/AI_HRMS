@@ -1,5 +1,6 @@
-package com.aihrms.aihrmsbackend.entity;
+package com.aihrms.aihrmsbackend.recruitment.entity;
 
+import com.aihrms.aihrmsbackend.entity.Employee;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

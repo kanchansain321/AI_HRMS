@@ -1,4 +1,4 @@
-package com.aihrms.aihrmsbackend.entity;
+package com.aihrms.aihrmsbackend.recruitment.entity;
 
 import jakarta.persistence.*;
 
