@@ -1,4 +1,4 @@
 package com.aihrms.aihrmsbackend.controller;
 
-public class LeaveController {
+public class EmpLeaveController {
 }
