@@ -7,6 +7,7 @@ package com.aihrms.aihrmsbackend.recruitment.controller;
 import com.aihrms.aihrmsbackend.dto.response.CustomResponse;
 import com.aihrms.aihrmsbackend.recruitment.dto.request.GenerateQuestionsRequest;
 import com.aihrms.aihrmsbackend.recruitment.service.ResumeScreeningService;
+import com.aihrms.aihrmsbackend.security.RequireAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * Skill-based interview questions for a screened resume.
  */
 @RestController
+@RequireAdmin
 @RequestMapping("/recruitment/interview-questions")
 public class InterviewQuestionController {
 

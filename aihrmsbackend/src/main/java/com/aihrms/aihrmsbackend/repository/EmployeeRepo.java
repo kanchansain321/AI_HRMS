@@ -14,4 +14,6 @@ public interface EmployeeRepo extends JpaRepository<Employee,Long> {
     @Query(value = "select e from  Employee  e where  e.email=:email and e.isActive=true")
     List<Employee> existsByEmail(String email) ;
 
+    Optional<Employee> findFirstByEmail(String email);
+
 }

@@ -1,5 +1,6 @@
 package com.aihrms.aihrmsbackend.controller;
 
+import com.aihrms.aihrmsbackend.security.RequireAdmin;
 import com.aihrms.aihrmsbackend.service.DesignationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ public class DesignationController {
 
     // Add Designation
     @PostMapping
+    @RequireAdmin
     public ResponseEntity<?> createDesignation(
             @RequestParam("designationName") String designationName) {
 

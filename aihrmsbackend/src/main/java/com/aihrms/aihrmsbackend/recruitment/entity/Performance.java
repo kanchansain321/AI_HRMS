@@ -14,11 +14,11 @@ public class Performance {
     @JoinColumn(name = "employee_id",nullable = false)
     @ManyToOne
     private Employee employee;
-    @Column(name = "review_period",length = 20)
+    @Column(name = "review_period", length = 20)
     private String reviewPeriod;
-    @Column(name = "rating",length = 20)
+    @Column(name = "rating", precision = 3, scale = 2)
     private BigDecimal rating;
-    @Column(name = "ai_summary",precision = 3,scale = 2)
+    @Column(name = "ai_summary", columnDefinition = "TEXT")
     private String aiSummary;
 
     public Long getId() {

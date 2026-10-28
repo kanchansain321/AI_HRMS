@@ -11,6 +11,7 @@ import com.aihrms.aihrmsbackend.repository.DesignationRepo;
 import com.aihrms.aihrmsbackend.repository.EmpRoleRepo;
 import com.aihrms.aihrmsbackend.repository.EmployeeRepo;
 import com.aihrms.aihrmsbackend.service.EmployeeService;
+import com.aihrms.aihrmsbackend.util.EmployeeStatusCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.setEmail(request.getEmail());
                 employee.setPassword(request.getPassword());
                 if(request.getDepartment()!=null){
-                    Optional<Department> optionalDepartment= departmentRepo.findById(Long.valueOf(request.getDepartment()));
+                    Optional<Department> optionalDepartment= departmentRepo.findById(request.getDepartment());
                     if(optionalDepartment.isPresent()){
                         employee.setDepartment(optionalDepartment.get());
                     }
@@ -69,7 +70,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 //                employee.setPassword(passwordEncoder.encode(request.getPassword())); // hashed
 //                employee.setDesignation(new Designation(request.getDesignation().longValue()));
                 employee.setJoiningDate(request.getJoiningDate());
-                employee.setActive(true);
+                employee.setPhoneNumber(request.getPhoneNumber());
+                Integer statusId = EmployeeStatusCodes.toId(request.getStatus());
+                employee.setStatus(statusId);
+                employee.setActive(statusId == null || statusId.equals(EmployeeStatusCodes.ACTIVE));
 
                 //3 Role set
                 if (request.getRole() != null) {
@@ -98,18 +102,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         EmployeeResponse employeeResponse= new EmployeeResponse();
         employeeResponse.setId(savedEmployee.getId());
-         employeeResponse.setFirstName(savedEmployee.getName());
-         employeeResponse.setEmail(savedEmployee.getEmail());
-         employeeResponse.setDesignation(savedEmployee.getDesignation().getDesignationName());
-         employeeResponse.setDepartmentName(savedEmployee.getDepartment().getDepartmentName());
-         employeeResponse.setPhoneNumber(savedEmployee.getPhoneNumber());
-         employeeResponse.setStatus(String.valueOf(savedEmployee.getStatus()));
-         employeeResponse.setJoiningDate(savedEmployee.getJoiningDate());
-         employeeResponse.setPhoneNumber(savedEmployee.getPhoneNumber());
-         employeeResponse.setUpdatedAt(savedEmployee.getUpdatedAt());
+        employeeResponse.setName(savedEmployee.getName());
+        employeeResponse.setFirstName(savedEmployee.getName());
+        employeeResponse.setEmail(savedEmployee.getEmail());
+        if (savedEmployee.getDesignation() != null) {
+            employeeResponse.setDesignation(savedEmployee.getDesignation().getDesignationName());
+            employeeResponse.setDesignationId(savedEmployee.getDesignation().getId());
+        }
+        if (savedEmployee.getDepartment() != null) {
+            employeeResponse.setDepartmentName(savedEmployee.getDepartment().getDepartmentName());
+            if (savedEmployee.getDepartment().getId() != null) {
+                employeeResponse.setDepartmentId(savedEmployee.getDepartment().getId().longValue());
+            }
+        }
+        if (savedEmployee.getRole() != null) {
+            employeeResponse.setRoleName(savedEmployee.getRole().getName());
+            employeeResponse.setRoleId(savedEmployee.getRole().getId());
+        }
+        employeeResponse.setPhoneNumber(savedEmployee.getPhoneNumber());
+        employeeResponse.setStatus(EmployeeStatusCodes.toLabel(savedEmployee.getStatus()));
+        employeeResponse.setJoiningDate(savedEmployee.getJoiningDate());
+        employeeResponse.setUpdatedAt(savedEmployee.getUpdatedAt());
 
 
-         return employeeResponse;
+        return employeeResponse;
 
 
 
@@ -127,11 +143,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
             throw new RuntimeException(e);
         }
-        }
+    }
 
-        //GetAll
+    //GetAll
     @Override
-        public List<EmployeeResponse> findAll() {
+    public List<EmployeeResponse> findAll() {
 
         try {
             List<Employee> employees = employeeRepo.findAll();
@@ -160,7 +176,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponse updateEmployee(EmployeeAddUpdateReq request) {
         try {
             // 1. Find the existing employee (throws error if not found)
-            Employee employee = employeeRepo.findById(Long.valueOf(request.getId()))
+            Long employeeId = Long.valueOf(request.getId());
+            Employee employee = employeeRepo.findById(employeeId)
                     .orElseThrow(() -> new RuntimeException("Employee not found with id: " + request.getId()));
 
             // 2. Update basic fields (only if provided in request)
@@ -170,10 +187,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             if (request.getEmail() != null) {
                 // Check if new email is already taken by ANOTHER employee
                 List<Employee> emailCheck = employeeRepo.existsByEmail(request.getEmail());
-                if (!emailCheck.isEmpty() && !emailCheck.get(0).getId().equals(request.getId())) {
+                if (!emailCheck.isEmpty() && !emailCheck.get(0).getId().equals(employeeId)) {
                     throw new RuntimeException("Email already registered: " + request.getEmail());
                 }
                 employee.setEmail(request.getEmail());
+            }
+            if (request.getPassword() != null && !request.getPassword().isBlank()) {
+                employee.setPassword(request.getPassword());
             }
             if (request.getPhoneNumber() != null) {
                 employee.setPhoneNumber(request.getPhoneNumber());
@@ -181,10 +201,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             if (request.getJoiningDate() != null) {
                 employee.setJoiningDate(request.getJoiningDate());
             }
+            if (request.getStatus() != null) {
+                Integer statusId = EmployeeStatusCodes.toId(request.getStatus());
+                employee.setStatus(statusId);
+                employee.setActive(statusId.equals(EmployeeStatusCodes.ACTIVE));
+            }
 
             // 3. Update Department (if department ID is provided)
             if (request.getDepartment() != null) {
-                Department department = departmentRepo.findById(Long.valueOf(request.getDepartment()))
+                Department department = departmentRepo.findById(request.getDepartment())
                         .orElseThrow(() -> new RuntimeException(
                                 "Department not found with id: " + request.getDepartment()));
                 employee.setDepartment(department);

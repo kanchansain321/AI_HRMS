@@ -76,7 +76,7 @@ public class DepartmentServiceImp implements DepartmentService {
         try {
 
             Optional<Department> department =
-                    departmentRepo.findById(id);
+                    departmentRepo.findById(id.intValue());
             //Department department = departmentRepo.getById(id);
 
             if (department.isEmpty()) {

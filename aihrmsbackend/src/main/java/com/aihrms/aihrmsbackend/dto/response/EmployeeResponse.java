@@ -5,15 +5,20 @@ import java.util.Date;
 
 public class EmployeeResponse {
     private Long id;
+    private String name;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
     private String designation;
+    private Long designationId;
+    private Long departmentId;
+    private Long roleId;
 
     private Date joiningDate;
     private String status;
     private String departmentName;
+    private String roleName;
     private Date createdAt;
     private Date updatedAt;
 
@@ -23,6 +28,14 @@ public class EmployeeResponse {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFirstName() {
@@ -65,6 +78,30 @@ public class EmployeeResponse {
         this.designation = designation;
     }
 
+    public Long getDesignationId() {
+        return designationId;
+    }
+
+    public void setDesignationId(Long designationId) {
+        this.designationId = designationId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
     public Date getJoiningDate() {
         return joiningDate;
     }
@@ -87,6 +124,14 @@ public class EmployeeResponse {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public Date getCreatedAt() {

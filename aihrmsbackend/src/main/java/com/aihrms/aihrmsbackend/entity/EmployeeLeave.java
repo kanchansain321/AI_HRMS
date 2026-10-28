@@ -12,7 +12,7 @@ public class EmployeeLeave {
     private Long id;
 
     @JoinColumn(name = "employee_id")
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Employee employee;
 
     @Column(name="leave_type")

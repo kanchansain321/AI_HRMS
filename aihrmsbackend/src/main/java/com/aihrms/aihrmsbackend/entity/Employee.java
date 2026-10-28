@@ -6,42 +6,42 @@ import java.util.Date;
 @Entity
 @Table(name = "employee")
 public class Employee {
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+ @Id
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ private Long id;
 
-   @Column(name = "name")
-    private String name;
-    @Column(name="email")
-    private String email;
+ @Column(name = "name")
+ private String name;
+ @Column(name="email")
+ private String email;
 
-    @Column(name="password")
-    private String password;
+ @Column(name="password")
+ private String password;
 
-    @JoinColumn(name="role")
-    @OneToOne
-    private EmpRole  role;
+ @ManyToOne(fetch = FetchType.EAGER)
+ @JoinColumn(name = "role")
+ private EmpRole role;
 
-    @JoinColumn(name = "department_id")
-    @OneToOne
-    private Department department;
+ @ManyToOne(fetch = FetchType.EAGER)
+ @JoinColumn(name = "department_id")
+ private Department department;
 
-    @JoinColumn(name="designation_id",referencedColumnName = "id")
-    @OneToOne
-    private Designation designation;
+ @ManyToOne(fetch = FetchType.EAGER)
+ @JoinColumn(name = "designation_id")
+ private Designation designation;
 
-    @Column(name="joining_date")
-    private Date joiningDate;
+ @Column(name="joining_date")
+ private Date joiningDate;
 
-    @Column(name="is_active")
-    private Boolean isActive;
-    @Column(name="phone_number")
+ @Column(name="is_active")
+ private Boolean isActive;
+ @Column(name="phone_number")
  private String phoneNumber;
-@Column(name="status_id")
+ @Column(name="status_id")
  private Integer status;
-@Column(name="created_at")
+ @Column(name="created_at")
  private Date createdAt;
-@Column(name="updated_at")
+ @Column(name="updated_at")
  private Date updatedAt;
 
  public Long getId() {

@@ -6,6 +6,7 @@ import com.aihrms.aihrmsbackend.dto.response.CustomResponse;
 import com.aihrms.aihrmsbackend.recruitment.dto.request.RankCandidatesRequest;
 import com.aihrms.aihrmsbackend.recruitment.service.CandidateRankingService;
 import com.aihrms.aihrmsbackend.recruitment.service.ResumeScreeningService;
+import com.aihrms.aihrmsbackend.security.RequireAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
  * Paths mirror the dedicated recruitment-service API under /recruitment.
  */
 @RestController
+@RequireAdmin
 @RequestMapping("/recruitment/resumes")
 public class ResumeController {
 

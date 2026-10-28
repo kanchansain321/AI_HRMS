@@ -1,5 +1,6 @@
 package com.aihrms.aihrmsbackend.controller;
 
+import com.aihrms.aihrmsbackend.security.RequireAdmin;
 import com.aihrms.aihrmsbackend.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,12 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping
+    @RequireAdmin
     public ResponseEntity<?> createdDepartment(@RequestParam("departmentName") String departmentName) {
         return ResponseEntity.ok(departmentService.addDepartment(departmentName));
     }
+
+
 
     // Get Department By ID
     @GetMapping("/{id}")
